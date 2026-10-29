@@ -1,99 +1,71 @@
-# CraveBite — Food Delivery Web Application
+# CraveBite — Food Delivery Application
 
-A responsive food-delivery web application built with HTML, CSS, and Vanilla JavaScript, focused on interactive UI, client-side state management, filtering, cart functionality, and dynamic content rendering.
+CraveBite is a responsive food-delivery demo with a React + Vite frontend and a Spring Boot REST API backed by MySQL.
 
-## Overview
+## Project structure
 
-CraveBite simulates a modern food-delivery experience with restaurant browsing, menu filtering, cart management, quantity updates, combo suggestions, and interactive restaurant views.
+- `frontend/` — React 19, Vite 7, CSS, and repository-owned SVG food artwork.
+- `backend/` — Spring Boot 3, Java 17, Spring Data JPA, and MySQL.
+- `Dockerfile` and `render.yaml` — Render backend deployment configuration.
 
-## Key Features
+## Features
 
-- Responsive food-delivery interface
-- Dynamic menu rendering
-- Veg/non-veg filtering
-- Restaurant browsing
-- Sliding cart
-- Quantity management
-- Real-time cart totals
-- Combo suggestion modal
-- Restaurant-specific menu views
-- Dynamic DOM updates
-- CSS transitions and interactions
+- Restaurant and food browsing
+- Search, category filters, restaurant filters, and vegetarian-only filtering
+- Cart quantity controls and totals
+- Checkout through the Spring Boot API
+- Demo-menu seeding/updating without deleting existing database records
+- Server-side menu lookup and price calculation for orders
 
-## Technology Stack
-
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- GitHub Pages
-
-## How It Works
-
-```text
-JavaScript Data
-      |
-      v
-Menu Rendering
-      |
-      +--> Filtering
-      |
-      +--> Restaurant Selection
-      |
-      v
-Cart State
-      |
-      +--> Quantity Updates
-      |
-      +--> Total Calculation
-      |
-      v
-Dynamic UI
-```
-
-## My Contributions
-
-- Designed and implemented the frontend interface.
-- Built dynamic menu rendering with JavaScript data.
-- Implemented cart state and quantity management.
-- Added category and dietary filtering.
-- Developed interactive modals.
-- Implemented dynamic price and total calculations.
-- Added responsive layouts and CSS transitions.
-- Deployed the application with GitHub Pages.
-
-## Live Demo
-
-[Open CraveBite](https://arigalapunithkumar.github.io/Online-Food-Delivery-Application/)
-
-## Run Locally
+## Run the frontend locally
 
 ```bash
-git clone https://github.com/ArigalaPunithKumar/Online-Food-Delivery-Application.git
-cd Online-Food-Delivery-Application
+cd frontend
+npm install
+npm run dev
 ```
 
-Open `index.html` in a browser or use a local development server.
+To create the production build:
 
-## What I Learned
+```bash
+npm run build
+```
 
-- Client-side state management
-- Arrays and objects for application data
-- Dynamic DOM rendering
-- Event handling
-- Filtering and cart logic
-- Responsive UI development
+Optional environment variable:
 
-## Future Improvements
+- `VITE_API_BASE_URL` — the backend base URL, without a trailing slash. It defaults to `https://cravebite-backend-spring.onrender.com`.
 
-- Backend persistence
-- User authentication
-- Restaurant/order APIs
-- Payment workflow simulation
-- Order tracking
-- React-based component architecture
+## Deploy the frontend to Vercel
+
+1. Connect/install the GitHub integration in Vercel, then import this repository.
+2. Select **Vite** as the framework.
+3. Set **Root Directory** to `frontend`.
+4. Set **Build Command** to `npm run build` and **Output Directory** to `dist`.
+5. Set `VITE_API_BASE_URL` to the live Render backend URL.
+6. Deploy and test the menu, filters, cart, and checkout.
+
+There is currently no verified live-demo URL. The old GitHub Pages link was removed because the frontend is a Vite application inside `frontend/`, not a root-level static HTML site.
+
+## Deploy the backend to Render
+
+The Render Blueprint uses the root `Dockerfile` and configures `/health` as the service health check. Configure these environment variables in Render:
+
+| Variable | Value |
+|---|---|
+| `DB_HOST` | Your database host from Aiven |
+| `DB_PORT` | Your database port (Blueprint default: `13147`) |
+| `DB_NAME` | Your database name (Blueprint default: `defaultdb`) |
+| `DB_USER` | Your database username (Blueprint default: `avnadmin`) |
+| `DB_PASSWORD` | Your database password |
+
+Never commit real credentials. Use `/health` to check the service process and `/ready` to check database connectivity.
+
+## Demo limitations
+
+- Checkout records demo orders; authentication, payment processing, and live delivery tracking are not implemented.
+- Login and Sign Up are presentation-only controls.
+- Run a live frontend/backend integration test before describing the app as production-ready.
 
 ## Author
 
-**A Punith Kumar**
-
-[GitHub](https://github.com/ArigalaPunithKumar)
+A Punith Kumar — [GitHub](https://github.com/ArigalaPunithKumar)
