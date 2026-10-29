@@ -5,7 +5,6 @@ const DELIVERY_FEE = 40;
 
 const foodData = [];
 
-
 const categories = [
   {id:"breakfast",name:"Breakfast",image:"/images/idli.svg"},
   {id:"biryani",name:"Biryani",image:"/images/biryani.svg"},
@@ -14,10 +13,14 @@ const categories = [
   {id:"dessert",name:"Dessert",image:"/images/dessert.svg"}
 ];
 
-const restaurants = [...new Set(foodData.map(item => item.restaurant))];
+const restaurants = [...new Set(liveMenu.map(item => item.restaurantName || item.restaurant).filter(Boolean))];
 
 function App() {
   const [cart,setCart] = useState([]);
+  const [liveMenu,setLiveMenu] = useState([]);
+  const [menuLoading,setMenuLoading] = useState(true);
+  const [menuError,setMenuError] = useState("");
+  const [checkoutDetails,setCheckoutDetails] = useState({customerName:"",customerEmail:"",customerPhone:"",deliveryAddress:""});
   const [liveMenu,setLiveMenu] = useState([]);
   const [category,setCategory] = useState("all");
   const [restaurant,setRestaurant] = useState("all");
@@ -25,6 +28,16 @@ function App() {
   const [search,setSearch] = useState("");
   const [cartOpen,setCartOpen] = useState(false);
   const [checkoutState,setCheckoutState] = useState("");
+
+  React.useEffect(() => {
+    let active = true;
+    fetch(API_BASE_URL + "/api/menu")
+      .then(response => { if (!response.ok) throw new Error("Menu service unavailable"); return response.json(); })
+      .then(items => { if (active) { setLiveMenu(Array.isArray(items) ? items : []); setMenuError(""); } })
+      .catch(() => { if (active) { setLiveMenu([]); setMenuError("Menu is currently unavailable. Please try again later."); } })
+      .finally(() => { if (active) setMenuLoading(false); });
+    return () => { active = false; };
+  }, []);
   const [loadingMenu,setLoadingMenu] = useState(true);
   const [menuError,setMenuError] = useState("");
   const [checkoutDetails,setCheckoutDetails] = useState({customerName:"",customerEmail:"",customerPhone:"",deliveryAddress:""});
