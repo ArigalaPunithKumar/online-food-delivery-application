@@ -1,6 +1,6 @@
 # CraveBite — Food Delivery Application
 
-CraveBite is a responsive food-delivery demo with a React + Vite frontend and a Spring Boot REST API backed by MySQL.
+CraveBite is a full-stack food-delivery application with a React + Vite frontend and a Spring Boot REST API backed by MySQL.
 
 ## Project structure
 
@@ -14,7 +14,7 @@ CraveBite is a responsive food-delivery demo with a React + Vite frontend and a 
 - Search, category filters, restaurant filters, and vegetarian-only filtering
 - Cart quantity controls and totals
 - Checkout through the Spring Boot API
-- Demo-menu seeding/updating without deleting existing database records
+- Menu and order data are read from the configured production database
 - Server-side menu lookup and price calculation for orders
 
 ## Run the frontend locally
@@ -44,7 +44,7 @@ Optional environment variable:
 5. Set `VITE_API_BASE_URL` to the live Render backend URL.
 6. Deploy and test the menu, filters, cart, and checkout.
 
-There is currently no verified live-demo URL. The old GitHub Pages link was removed because the frontend is a Vite application inside `frontend/`, not a root-level static HTML site.
+Live frontend: https://cravebite-beta.vercel.app/
 
 ## Deploy the backend to Render
 
@@ -60,11 +60,11 @@ The Render Blueprint uses the root `Dockerfile` and configures `/health` as the 
 
 Never commit real credentials. Use `/health` to check the service process and `/ready` to check database connectivity.
 
-## Demo limitations
+## Current application scope
 
-- Checkout records demo orders; authentication, payment processing, and live delivery tracking are not implemented.
+- Checkout persists orders to the configured database. Payment processing and live delivery tracking are not currently implemented.
 - Login and Sign Up are presentation-only controls.
-- Run a live frontend/backend integration test before describing the app as production-ready.
+- Verify Aiven connection settings and run the menu and checkout integration test before accepting live orders.
 
 ## Author
 
